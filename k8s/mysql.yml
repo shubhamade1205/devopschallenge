@@ -8,7 +8,7 @@ spec:
   ports:
     - port: 3306
       name: mysql
-  clusterIP: None # Headless service for stable network identities in StatefulSets
+  clusterIP: None
   selector:
     app: mysql
 ---
@@ -36,12 +36,14 @@ spec:
                 secretKeyRef:
                   name: mysql-credentials
                   key: root-password
+            - name: MYSQL_DATABASE
+              value: "demo" # 🚀 Automatically creates the 'demo' database on startup!
           ports:
             - containerPort: 3306
               name: mysql
           volumeMounts:
             - name: mysql-persistent-storage
-              mountPath: /var/lib/mysql # Where MySQL physically saves data
+              mountPath: /var/lib/mysql
   volumeClaimTemplates:
   - metadata:
       name: mysql-persistent-storage
@@ -49,4 +51,4 @@ spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 1Gi # Allocates 1 Gigabyte of persistent space from Minikube
+          storage: 1Gi
