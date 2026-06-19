@@ -20,7 +20,7 @@ spec:
       containers:
         - name: backend
 
-          image: flask-demo:latest
+          image: shubhamade1122/myapp:latest
           imagePullPolicy: IfNotPresent
 
           ports:
